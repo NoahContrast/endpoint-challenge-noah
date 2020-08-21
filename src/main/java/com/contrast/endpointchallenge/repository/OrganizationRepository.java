@@ -18,6 +18,9 @@ import java.util.function.Consumer;
 import static org.jooq.generated.Tables.*;
 import static org.jooq.impl.DSL.trueCondition;
 
+/**
+ * Repository responsible for Organizations and Applications by Organizations
+ */
 @Repository
 public class OrganizationRepository {
 
@@ -29,21 +32,27 @@ public class OrganizationRepository {
     private static final SelectQueryMapper<ApplicationDAO> appMapper
             = SelectQueryMapperFactory.newInstance().newMapper(ApplicationDAO.class);
 
-    public OrganizationRepository(final DSLContext dslContext) {
-        this.dslContext = dslContext;
-    }
-
-    public void getAllOrganizations(final Consumer<OrganizationDAO> daoConsumer) {
-        orgMapper.stream(dslContext.selectFrom(ORGANIZATION)).forEach(daoConsumer);
-    }
-
     public ImmutableMap<String, TableField<?, ?>> columnMap = ImmutableMap.of(
             "name", APPLICATION.NAME,
             "description", APPLICATION.DESCRIPTION
     );
 
+    public OrganizationRepository(final DSLContext dslContext) {
+        this.dslContext = dslContext;
+    }
+
+    /**
+     * Get All Organizations
+     *
+     * @param daoConsumer an OrganizationDao consumer
+     */
+    public void getAllOrganizations(final Consumer<OrganizationDAO> daoConsumer) {
+        orgMapper.stream(dslContext.selectFrom(ORGANIZATION)).forEach(daoConsumer);
+    }
+
     /**
      * Get Organization by ID
+     *
      * @param id The ID of the Org to fetch
      * @return OrganizationDAO
      */
@@ -56,10 +65,11 @@ public class OrganizationRepository {
 
     /**
      * Gets all Applications by Org ID
+     *
      * @param daoConsumer the Dao Consumer
-     * @param id The ID of the org to fetch all apps by
-     * @param query the
-     * @param order column name to order by asc/desc
+     * @param id          The ID of the org to fetch all apps by
+     * @param query       the
+     * @param order       column name to order by asc/desc
      */
     public void getApplicationsByOrgId(final Consumer<ApplicationDAO> daoConsumer,
                                        final UUID id,
@@ -87,6 +97,7 @@ public class OrganizationRepository {
     /**
      * Takes a query and returns appropriate jooq Condition to filter by
      * Ignores case sensitivity
+     *
      * @param query the query string
      * @return Condition The JOOQ condition
      */
@@ -102,12 +113,13 @@ public class OrganizationRepository {
 
     /**
      * Takes an order query, sanitises and splits the string to build JOOQ SortField
+     *
      * @param orderCondition the column and order to filter by
      * @return SortField the converted jooq condition
      */
     private SortField<?> queryOrder(final String orderCondition) {
         if (!StringUtils.isEmpty(orderCondition)) {
-            String strippedOrderCondition = orderCondition.replaceAll("'","");
+            String strippedOrderCondition = orderCondition.replaceAll("'", "");
             String[] columnAndOrder = strippedOrderCondition.split("\\s+");
 
             SortField<?> orderBy;
@@ -117,6 +129,10 @@ public class OrganizationRepository {
                 String order = columnAndOrder[1];
 
                 TableField<?, ?> tableField = columnMap.get(column);
+
+                if(tableField == null) {
+                    return APPLICATION.NAME.desc(); //default behavior;
+                }
 
                 if (!StringUtils.isEmpty(order)) {
                     if (order.equalsIgnoreCase("asc")) {

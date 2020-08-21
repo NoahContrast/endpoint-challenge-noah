@@ -1,6 +1,5 @@
 package com.contrast.endpointchallenge.service;
 
-import com.contrast.endpointchallenge.dao.ApplicationDAO;
 import com.contrast.endpointchallenge.dto.ApplicationDTO;
 import com.contrast.endpointchallenge.dto.OrganizationDTO;
 import com.contrast.endpointchallenge.mapper.ApplicationMapper;
@@ -11,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+/**
+ * Service responsible for mapping Organization/Application DAOs to DTOs
+ */
 @Service
 public class OrganizationService {
 
@@ -26,14 +28,30 @@ public class OrganizationService {
         this.applicationMapper = applicationMapper;
     }
 
+    /**
+     * Get All Organizations
+     * @param dtoConsumer The DTO Consumer
+     */
     public void getAllOrganizations(final Consumer<OrganizationDTO> dtoConsumer) {
         repository.getAllOrganizations(dao -> dtoConsumer.accept(organizationMapper.oganizationDaoToDto(dao)));
     }
 
+    /**
+     * Get Organization By Id
+     * @param id the ID of the organization
+     * @return the OrganizationDTO
+     */
     public OrganizationDTO getOrganizationById(final UUID id) {
         return organizationMapper.oganizationDaoToDto(repository.getOrganizationById(id));
     }
 
+    /**
+     * Get all Applications by Organization ID
+     * @param dtoConsumer The DTO Consumer
+     * @param id The ID of the Organization
+     * @param query The Query string to match against name
+     * @param order the column and order to ascend by
+     */
     public void getApplicationsByOrgId(final Consumer<ApplicationDTO> dtoConsumer,
                                        final UUID id,
                                        final String query,
