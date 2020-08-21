@@ -1,9 +1,10 @@
-package com.endpoint.endpoint.config;
+package com.contrast.endpointchallenge.config;
 
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
 import org.jooq.impl.DefaultExecuteListenerProvider;
+import org.simpleflatmapper.jooq.JooqMapperFactory;
 import org.springframework.boot.autoconfigure.jooq.JooqExceptionTranslator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,8 +35,8 @@ public class JooqConfiguration {
     public DefaultConfiguration configuration() {
         DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
         jooqConfiguration.set(connectionProvider());
-        jooqConfiguration
-                .set(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()));
+        jooqConfiguration.set(new DefaultExecuteListenerProvider(new JooqExceptionTranslator()));
+        jooqConfiguration.set(JooqMapperFactory.newInstance().ignorePropertyNotFound().newRecordMapperProvider());
 
         return jooqConfiguration;
     }
