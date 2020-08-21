@@ -23,6 +23,7 @@ public class OrganizationController {
 
     @RequestMapping(path = EndpointConstants.ORGANIZATIONS, method = RequestMethod.GET)
     public ResponseEntity<?> getOrganizations() {
+        service.getAllOrganizations();
         return ResponseEntity.ok().build();
     }
 
