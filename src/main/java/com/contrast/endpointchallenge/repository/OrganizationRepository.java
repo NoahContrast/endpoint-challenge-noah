@@ -151,6 +151,11 @@ public class OrganizationRepository {
         return APPLICATION.NAME.desc(); //default behavior
     }
 
+    /**
+     * Checks if an Organization exists
+     * @param uuid the orgId
+     * @return true if the org exists, false if not.
+     */
     public boolean organizationExists(final UUID uuid) {
         return dslContext.fetchExists(dslContext.selectOne().from(ORGANIZATION).where(ORGANIZATION.ID.eq(uuid)));
     }
