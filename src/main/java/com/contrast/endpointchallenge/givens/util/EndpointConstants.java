@@ -1,4 +1,4 @@
-package com.contrast.endpointchallenge.util;
+package com.contrast.endpointchallenge.givens.util;
 
 public class EndpointConstants {
 
