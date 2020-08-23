@@ -1,11 +1,13 @@
 package com.contrast.endpointchallenge.controller;
 
+import com.contrast.endpointchallenge.constraint.OrgExists;
 import com.contrast.endpointchallenge.dto.ApplicationDTO;
 import com.contrast.endpointchallenge.dto.OrganizationDTO;
 import com.contrast.endpointchallenge.service.OrganizationService;
 import com.contrast.endpointchallenge.util.EndpointConstants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Controller to handle GET requests for Organizations and Applications
  */
+@Validated
 @Controller
 public class OrganizationController {
 
@@ -61,7 +64,7 @@ public class OrganizationController {
      * @return List of Application DTOs that corresponds with Organization ID
      */
     @RequestMapping(path = EndpointConstants.ORGANIZATION_APPLICATIONS, method = RequestMethod.GET)
-    public ResponseEntity<List<ApplicationDTO>> getApplicationsByOrgId(@PathVariable(EndpointConstants.ID) final UUID id,
+    public ResponseEntity<List<ApplicationDTO>> getApplicationsByOrgId(@PathVariable(EndpointConstants.ID) @OrgExists final UUID id,
                                                                        @RequestParam(name = "query", required = false) final String query,
                                                                        @RequestParam(name = "order", required = false) final String order) {
         List<ApplicationDTO> dtoList = new ArrayList<>();

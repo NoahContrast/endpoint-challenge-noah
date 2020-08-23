@@ -131,7 +131,7 @@ public class OrganizationRepository {
 
                 TableField<?, ?> tableField = columnMap.get(column);
 
-                if(tableField == null) {
+                if (tableField == null) {
                     return APPLICATION.NAME.desc(); //default behavior;
                 }
 
@@ -149,5 +149,9 @@ public class OrganizationRepository {
             }
         }
         return APPLICATION.NAME.desc(); //default behavior
+    }
+
+    public boolean organizationExists(final UUID uuid) {
+        return dslContext.fetchExists(dslContext.selectOne().from(ORGANIZATION).where(ORGANIZATION.ID.eq(uuid)));
     }
 }

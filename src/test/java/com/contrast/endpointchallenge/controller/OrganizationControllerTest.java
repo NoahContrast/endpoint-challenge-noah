@@ -1,12 +1,15 @@
 package com.contrast.endpointchallenge.controller;
 
+import com.contrast.endpointchallenge.constraint.OrgExistsValidator;
 import com.contrast.endpointchallenge.dto.ApplicationDTO;
 import com.contrast.endpointchallenge.dto.OrganizationDTO;
 import com.contrast.endpointchallenge.exception.ResourceNotFoundException;
 import com.contrast.endpointchallenge.service.OrganizationService;
+import com.contrast.endpointchallenge.util.EndpointConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,6 +28,7 @@ import static com.contrast.endpointchallenge.util.EndpointConstants.*;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -40,6 +44,9 @@ public class OrganizationControllerTest {
 
     @MockBean
     private OrganizationService service;
+
+    @Mock
+    private OrgExistsValidator orgExistsValidator;
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -59,7 +66,7 @@ public class OrganizationControllerTest {
         }).when(service).getAllOrganizations(any());
 
         //then
-        mvc.perform(get(ORGANIZATIONS)
+        mvc.perform(get(EndpointConstants.ORGANIZATIONS)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(expectedJson)));
@@ -76,7 +83,7 @@ public class OrganizationControllerTest {
         when(service.getOrganizationById(expected.getOrgId())).thenReturn(expected);
 
         //then
-        mvc.perform(get(ORGANIZATION, expected.getOrgId())
+        mvc.perform(get(EndpointConstants.ORGANIZATION, expected.getOrgId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(expectedJson)));
@@ -92,7 +99,7 @@ public class OrganizationControllerTest {
         when(service.getOrganizationById(incorrectId)).thenThrow(new ResourceNotFoundException(incorrectId.toString()));
 
         //then
-        mvc.perform(get(ORGANIZATION, incorrectId)
+        mvc.perform(get(EndpointConstants.ORGANIZATION, incorrectId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString(expectedErrorString)));
@@ -107,6 +114,9 @@ public class OrganizationControllerTest {
 
         UUID orgId = UUID.randomUUID();
 
+        given(service.organizationExists(any())).willReturn(true);
+        given(orgExistsValidator.isValid(any(), any())).willReturn(true);
+
         //when
         doAnswer(ans -> {
             Consumer<ApplicationDTO> consumer = ans.getArgument(0);
@@ -115,9 +125,23 @@ public class OrganizationControllerTest {
         }).when(service).getApplicationsByOrgId(any(), eq(orgId), any(), any());
 
         //then
-        mvc.perform(get(ORGANIZATION_APPLICATIONS, orgId)
+        mvc.perform(get(EndpointConstants.ORGANIZATION_APPLICATIONS, orgId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(expectedJson)));
+    }
+
+    @Test
+    public void getApplicationsByOrganizationId_withNonExistentId_returnsCorrectError() throws Exception {
+        UUID nonExistentOrgId = UUID.randomUUID();
+
+        given(service.organizationExists(nonExistentOrgId)).willReturn(false);
+        given(orgExistsValidator.isValid(eq(nonExistentOrgId), any())).willReturn(false);
+
+        //then
+        mvc.perform(get(ORGANIZATION_APPLICATIONS, nonExistentOrgId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(containsString(String.format("Organization with ID %s does not exist", nonExistentOrgId))));
     }
 }

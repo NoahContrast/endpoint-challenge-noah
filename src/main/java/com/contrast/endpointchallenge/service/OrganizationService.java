@@ -59,4 +59,13 @@ public class OrganizationService {
                                        final String order) {
         repository.getApplicationsByOrgId(dao -> dtoConsumer.accept(applicationMapper.applicationDaoToDTO(dao)), id, query, order);
     }
+
+    /**
+     * Checks if the Organization Exists
+     * @param uuid OrgID to check
+     * @return true if exists, false if not
+     */
+    public boolean organizationExists(final UUID uuid) {
+        return repository.organizationExists(uuid);
+    }
 }
