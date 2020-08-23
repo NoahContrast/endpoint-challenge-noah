@@ -12,6 +12,7 @@ import org.simpleflatmapper.jooq.SelectQueryMapperFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -56,11 +57,11 @@ public class OrganizationRepository {
      * @param id The ID of the Org to fetch
      * @return OrganizationDAO
      */
-    public OrganizationDAO getOrganizationById(final UUID id) {
-        return dslContext.select()
+    public Optional<OrganizationDAO> getOrganizationById(final UUID id) {
+        return Optional.ofNullable(dslContext.select()
                 .from(ORGANIZATION)
                 .where(ORGANIZATION.ID.eq(id))
-                .fetchOneInto(OrganizationDAO.class);
+                .fetchOneInto(OrganizationDAO.class));
     }
 
     /**

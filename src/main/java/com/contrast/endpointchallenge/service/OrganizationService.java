@@ -2,6 +2,7 @@ package com.contrast.endpointchallenge.service;
 
 import com.contrast.endpointchallenge.dto.ApplicationDTO;
 import com.contrast.endpointchallenge.dto.OrganizationDTO;
+import com.contrast.endpointchallenge.exception.ResourceNotFoundException;
 import com.contrast.endpointchallenge.mapper.ApplicationMapper;
 import com.contrast.endpointchallenge.mapper.OrganizationMapper;
 import com.contrast.endpointchallenge.repository.OrganizationRepository;
@@ -42,7 +43,7 @@ public class OrganizationService {
      * @return the OrganizationDTO
      */
     public OrganizationDTO getOrganizationById(final UUID id) {
-        return organizationMapper.oganizationDaoToDto(repository.getOrganizationById(id));
+        return organizationMapper.oganizationDaoToDto(repository.getOrganizationById(id).orElseThrow(() -> new ResourceNotFoundException(id.toString())));
     }
 
     /**

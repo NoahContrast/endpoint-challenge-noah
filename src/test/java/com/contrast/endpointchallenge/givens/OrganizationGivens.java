@@ -7,7 +7,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.contrast.endpointchallenge.givens.util.AnyJavaLang.anyString;
+import static com.contrast.endpointchallenge.util.AnyJavaLang.anyString;
 
 public class OrganizationGivens {
 

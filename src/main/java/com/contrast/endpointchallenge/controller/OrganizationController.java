@@ -3,7 +3,7 @@ package com.contrast.endpointchallenge.controller;
 import com.contrast.endpointchallenge.dto.ApplicationDTO;
 import com.contrast.endpointchallenge.dto.OrganizationDTO;
 import com.contrast.endpointchallenge.service.OrganizationService;
-import com.contrast.endpointchallenge.givens.util.EndpointConstants;
+import com.contrast.endpointchallenge.util.EndpointConstants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

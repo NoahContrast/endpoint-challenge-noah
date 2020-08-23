@@ -2,6 +2,7 @@ package com.contrast.endpointchallenge.controller;
 
 import com.contrast.endpointchallenge.dto.ApplicationDTO;
 import com.contrast.endpointchallenge.dto.OrganizationDTO;
+import com.contrast.endpointchallenge.exception.ResourceNotFoundException;
 import com.contrast.endpointchallenge.service.OrganizationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -20,7 +21,7 @@ import java.util.function.Consumer;
 import static com.contrast.endpointchallenge.givens.ApplicationGivens.anyApplicationDTOList;
 import static com.contrast.endpointchallenge.givens.OrganizationGivens.anyOrganizationDTO;
 import static com.contrast.endpointchallenge.givens.OrganizationGivens.anyOrganizationDTOList;
-import static com.contrast.endpointchallenge.givens.util.EndpointConstants.*;
+import static com.contrast.endpointchallenge.util.EndpointConstants.*;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -79,6 +80,22 @@ public class OrganizationControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(expectedJson)));
+    }
+
+    @Test
+    public void getOrganizationById_withNonExistentEntity_returnsNotFound() throws Exception {
+        UUID incorrectId = UUID.randomUUID();
+
+        String expectedErrorString = String.format("Resource with ID: %s was not found", incorrectId);
+
+        //when
+        when(service.getOrganizationById(incorrectId)).thenThrow(new ResourceNotFoundException(incorrectId.toString()));
+
+        //then
+        mvc.perform(get(ORGANIZATION, incorrectId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(containsString(expectedErrorString)));
     }
 
     @Test
