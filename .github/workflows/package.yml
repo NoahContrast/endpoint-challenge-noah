@@ -23,9 +23,9 @@ jobs:
       - name: Contrast Scan Action
         uses: Contrast-Security-OSS/contrastscan-action@PROD-1800-rewrite-gh-action-with-cli
         with:
-          artifact: target/demo-0.0.1-SNAPSHOT.jar
+          artifact: target/endpoint-challenge-0.0.1-SNAPSHOT.jar
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
-          orgId: ${{ secrets.CONTRAST_ORG_ID }}
+          orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           projectName: endpoint-challenge
