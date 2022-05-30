@@ -21,7 +21,7 @@ jobs:
           mvn clean install -DskipTests
 
       - name: Contrast Scan Action
-        uses: Contrast-Security-OSS/contrastscan-action@v2.0.0
+        uses: Contrast-Security-OSS/contrastscan-action@v2
         with:
           artifact: target/endpoint-challenge-0.0.1-SNAPSHOT.jar
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
