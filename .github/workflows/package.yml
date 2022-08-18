@@ -17,6 +17,10 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
+      - name: build jar
+        run: |
+          mvn clean install -DskipTests
+
       - name: Contrast SCA Action
         uses: Contrast-Security-OSS/contrast-sca-action@main
         with:
@@ -24,10 +28,6 @@ jobs:
           orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           filePath: .
-
-      - name: build jar
-        run: |
-          mvn clean install -DskipTests
 
       - name: Contrast Scan Action
         uses: Contrast-Security-OSS/contrastscan-action@v2.0.2
