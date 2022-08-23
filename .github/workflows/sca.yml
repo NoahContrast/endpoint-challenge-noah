@@ -1,4 +1,4 @@
-name: contrast-scan-action
+name: source composition analysis
 
 on:
   push:
