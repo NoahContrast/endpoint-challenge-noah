@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.ConstraintViolationException;
 
+//Config
 @ControllerAdvice
 public class EndpointControllerAdvice extends ResponseEntityExceptionHandler {
 
