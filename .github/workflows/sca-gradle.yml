@@ -1,0 +1,23 @@
+name: SCA Gradle
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  perform-sca-gradle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout gradle vulnerable app
+        uses: actions/checkout@v3
+        with:
+          repository: SasanLabs/VulnerableApp
+      - name: Contrast SCA Action
+        uses: Contrast-Security-OSS/contrast-sca-action@main
+        with:
+          apiKey: ${{ secrets.CONTRAST_API_KEY }}
+          orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
+          authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
+          apiUrl: ${{ secrets.CONTRAST_API_URL }}
+          filePath: /github/workspace
