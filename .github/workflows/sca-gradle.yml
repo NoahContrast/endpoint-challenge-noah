@@ -20,4 +20,4 @@ jobs:
           orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
-          filePath: /github/workspace/SasanLabs/VulnerableApp/blob/master/build.gradle
+          filePath: /github/workspace/SasanLabs/VulnerableApp/build.gradle
