@@ -12,8 +12,8 @@ jobs:
       - name: Checkout gradle vulnerable app
         uses: actions/checkout@v3
         with:
-          repository: SasanLabs/VulnerableApp
-          path: vulnerable-app
+          repository: gradle/native-platform
+          path: test-app
       - name: Contrast SCA Action
         uses: Contrast-Security-OSS/contrast-sca-action@main
         with:
@@ -21,4 +21,4 @@ jobs:
           orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
-          filePath: /github/workspace/vulnerable-app
+          filePath: /github/workspace/test-app
