@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: gradle/native-platform
-          path: native-platform
+          path: gradle/native-platform
       - name: Contrast SCA Action
         uses: Contrast-Security-OSS/contrast-sca-action@main
         with:
@@ -21,4 +21,4 @@ jobs:
           orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
-          filePath: /github/workspace/native-platform
+          filePath: gradle/native-platform
