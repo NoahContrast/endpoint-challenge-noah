@@ -22,7 +22,6 @@ jobs:
           mvn clean install -DskipTests
 
       - name: Contrast SCA Action
-#        uses: Contrast-Security-OSS/contrast-sca-action@main
         uses: Markkuu/contrast-sca-action-test@main
         with:
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
