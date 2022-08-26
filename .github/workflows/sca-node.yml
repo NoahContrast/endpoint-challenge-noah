@@ -12,7 +12,7 @@ jobs:
       - name: Checkout Node app
         uses: actions/checkout@v3
         with:
-          repository: benc-uk/nodejs-demoapp
+          repository: YannMjl/nodejs-demo-app
 
       - name: Contrast SCA Action
         uses: Markkuu/contrast-sca-action-test@main

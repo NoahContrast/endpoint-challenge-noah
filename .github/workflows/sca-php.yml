@@ -14,6 +14,8 @@ jobs:
         with:
           repository: PHP-DI/demo
 
+      - uses: php-actions/composer@v6
+
       - name: Contrast SCA Action
         uses: Markkuu/contrast-sca-action-test@main
         with:
