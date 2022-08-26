@@ -1,4 +1,4 @@
-name: SCA Python
+name: SCA PHP
 
 on:
   push:
@@ -6,13 +6,13 @@ on:
       - "master"
 
 jobs:
-  perform-sca-python:
+  perform-sca-php:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout python app
+      - name: Checkout PHP app
         uses: actions/checkout@v3
         with:
-          repository: swinton/github-app-demo.py
+          repository: PHP-DI/demo
 
       - name: Contrast SCA Action
         uses: Markkuu/contrast-sca-action-test@main
