@@ -21,7 +21,7 @@ jobs:
       - name: Checkout dotnet app
         uses: actions/checkout@v3
         with:
-          repository: /DamirsCorner/20220708-dotnet-nuget-lock
+          repository: DamirsCorner/20220708-dotnet-nuget-lock
 
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v2
