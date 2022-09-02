@@ -27,7 +27,7 @@ jobs:
         run: ./gradlew build -x test
 
       - name: Contrast SCA Action
-        uses: Markkuu/contrast-sca-action-test@main
+        uses: Contrast-Security-OSS/contrast-sca-action@main
         with:
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
           orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
