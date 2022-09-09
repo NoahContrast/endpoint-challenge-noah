@@ -23,5 +23,5 @@ jobs:
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
           fail: true
           severity: high
-          ignoreDev: true
+          ignoreDev: false
           filePath: .
