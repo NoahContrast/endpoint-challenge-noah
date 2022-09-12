@@ -22,17 +22,16 @@ jobs:
           mvn clean install -DskipTests
 
       - name: Contrast SCA Action
-        uses: Contrast-Security-OSS/contrastscan-action@SCAN-4662-fail-action
+        uses: Contrast-Security-OSS/contrast-sca-action@main
         with:
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
           orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
-          severity: high
           filePath: .
 
       - name: Contrast Scan Action
-        uses: Contrast-Security-OSS/contrastscan-action@v2.0.2
+        uses: Contrast-Security-OSS/contrastscan-action@SCAN-4662-fail-action
         with:
           artifact: target/endpoint-challenge-0.0.1-SNAPSHOT.jar
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
@@ -40,6 +39,7 @@ jobs:
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           projectName: endpoint-challenge
+          severity: high
 
       - name: verify sarif contents
         run: |
