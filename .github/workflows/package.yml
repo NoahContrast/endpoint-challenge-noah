@@ -22,7 +22,7 @@ jobs:
           mvn clean install -DskipTests
 
       - name: Contrast SCA Action
-        uses: Contrast-Security-OSS/contrast-sca-action@SCAN-4662-fail-action
+        uses: Contrast-Security-OSS/contrastscan-action@SCAN-4662-fail-action
         with:
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
           orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
