@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -30,6 +32,18 @@ public class OrganizationController {
 
     public OrganizationController(final OrganizationService service) {
         this.service = checkNotNull(service, "OrganizationService was null");
+    }
+
+    public void dummySqlInjection(String userId)
+            throws SQLException {
+        String sql = "select "
+                + "first_name,last_name,username "
+                + "from users where userid = '"
+                + userId
+                + "'";
+        System.out.println(sql);
+//        Connection c = dataSource.getConnection();
+//        ResultSet rs = c.createStatement().executeQuery(sql);
     }
 
     /**
