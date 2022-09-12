@@ -21,6 +21,9 @@ jobs:
         run: |
           mvn clean install -DskipTests
 
+      - name: get jar name
+        run: ls -a target/
+
       - name: Contrast SCA Action
         uses: Contrast-Security-OSS/contrast-sca-action@main
         with:

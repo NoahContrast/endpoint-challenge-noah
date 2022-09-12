@@ -3,6 +3,7 @@ package com.contrast.endpointchallenge.controller;
 import com.contrast.endpointchallenge.constraint.OrgExists;
 import com.contrast.endpointchallenge.dto.ApplicationDTO;
 import com.contrast.endpointchallenge.dto.OrganizationDTO;
+import com.contrast.endpointchallenge.repository.OrganizationRepository;
 import com.contrast.endpointchallenge.service.OrganizationService;
 import com.contrast.endpointchallenge.util.EndpointConstants;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +29,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class OrganizationController {
 
     private final OrganizationService service;
+    private final OrganizationRepository repository;
 
-    public OrganizationController(final OrganizationService service) {
+    public OrganizationController(final OrganizationService service, OrganizationRepository repository) {
         this.service = checkNotNull(service, "OrganizationService was null");
+        this.repository = repository;
     }
 
     public void dummySqlInjection(String userId)
@@ -42,7 +44,9 @@ public class OrganizationController {
                 + userId
                 + "'";
         System.out.println(sql);
-//        Connection c = dataSource.getConnection();
+
+//        repository.
+    //        Connection c = dataSource.getConnection();
 //        ResultSet rs = c.createStatement().executeQuery(sql);
     }
 
