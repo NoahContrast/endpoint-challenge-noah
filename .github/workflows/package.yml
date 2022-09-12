@@ -39,6 +39,7 @@ jobs:
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           projectName: endpoint-challenge
+          fail: true
           severity: high
 
       - name: verify sarif contents
