@@ -27,7 +27,7 @@ jobs:
         run: ./gradlew build -x test
 
       - name: Contrast SCA Action
-        uses: Contrast-Security-OSS/contrast-sca-action@main
+        uses: Contrast-Security-OSS/contrast-sca-action@bump-cli-version-13
         with:
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
           orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
