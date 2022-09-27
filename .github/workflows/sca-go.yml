@@ -19,10 +19,12 @@ jobs:
           go-version: '1.15'
 
       - name: Contrast SCA Action
-        uses: Contrast-Security-OSS/contrast-sca-action@bump-cli-version-13
+        uses: Contrast-Security-OSS/contrast-sca-action@main
         with:
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
           orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
           filePath: .
+          severity: medium
+          fail: true
